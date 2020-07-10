@@ -1,32 +1,40 @@
 from flask import Flask, Response, render_template, request
 import json
 from wtforms import TextField, Form
+from flask_restful import Resource, Api
 
 app = Flask(__name__, template_folder='template')
+api=Api(app)
 
 class SearchForm(Form):
-    autocomp = TextField('Insert Footballer', id='city_autocomplete')
+    autocomp = TextField('Insert Footballer', id='footballer_autocomplete')
 
+footballer = ["Lionel Messi",
+      "Cristiano Ronaldo",
+      "Ronaldo Nazario",
+      "Ronaldinho Gaucho",
+      "Sergio Ramos",
+      "Sergio Busquets",
+      "Sergio Aguero",
+      "Diego Costa",
+      "Diego Godin"]
 
 @app.route('/_autocomplete', methods=['GET', 'POST'])
 def autocomplete():
-    cities = ["Lionel Messi",
-          "Cristiano Ronaldo",
-          "Ronaldo Nazario",
-          "Ronaldinho Gaucho",
-          "Sergio Ramos",
-          "Sergio Busquets",
-          "Sergio Aguero",
-          "Diego Costa",
-          "Diego Godin"]
-    print(cities)
-    return Response(json.dumps(cities), mimetype='application/json')
+    print(footballer)
+    return Response(json.dumps(footballer), mimetype='application/json')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = SearchForm(request.form)
     return render_template("search.html", form=form)
+
+class Football(Resource):
+    def get(self):
+        return footballer
+
+api.add_resource(Football, '/names')
 
 if __name__ == '__main__':
     app.run(debug=True)

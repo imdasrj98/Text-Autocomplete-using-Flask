@@ -6,18 +6,20 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
 <body>
-{{ form.autocomp.label }}: {{ form.autocomp }}
+<center>
+<h1>{{ form.autocomp.label }}: {{ form.autocomp }}
 <script>
     $(function() {
         $.ajax({
             url: '{{ url_for("autocomplete") }}'
             }).done(function (data){
-                $('#city_autocomplete').autocomplete({
+                $('#footballer_autocomplete').autocomplete({
                     source: data,
                     minLength: 2
                 });
             });
         });
 </script>
-  </body>
+</center>
+</h1>  </body>
 </html>
