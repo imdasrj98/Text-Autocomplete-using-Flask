@@ -32,9 +32,12 @@ def index():
 
 class Football(Resource):
     def get(self):
-        return footballer
+        return Response(json.dumps(footballer), mimetype='application/json')
 
 api.add_resource(Football, '/names')
 
-if __name__ == '__main__':
+def main():
     app.run(debug=True)
+
+if __name__ == '__main__':
+    main()
